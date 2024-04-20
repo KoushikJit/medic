@@ -9,7 +9,7 @@ import ChatComponent from "@/components/chatcomponent";
 import { useState } from "react";
 import { useChat } from "ai/react";
 
-export function Home() {
+const Home = () => {
   const [reportData, setreportData] = useState("");
   function onReportConfirmation(data: string): void {
     setreportData(data);
