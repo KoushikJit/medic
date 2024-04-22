@@ -19,8 +19,10 @@ const ChatComponent = ({ reportData }: Props) => {
 
   return (
     <div className="relative flex h-full min-h-[50vh] flex-col rounded-xl bg-muted/50 p-4 lg:col-span-2 gap-4">
-      <Badge variant="outline" className="absolute right-3 top-1.5">
-        Output
+      <Badge variant="outline" className={`absolute right-3 top-1.5 transition-all ${
+        reportData && "bg-[#00B612]"
+      }`}>
+        {reportData ? "✓ Report Added" : "No Report Added"}
       </Badge>
       <div className="flex-1" />
       <Messages messages={messages} isLoading={isLoading} />
@@ -38,7 +40,7 @@ const ChatComponent = ({ reportData }: Props) => {
         <Textarea
           value={input}
           onChange={handleInputChange}
-          placeholder="Type your message here..."
+          placeholder="Type your query here..."
           className="min-h-12 resize-none border-0 p-3 shadow-none focus-visible:ring-0"
         />
         <div className="flex items-center p-3 pt-0">

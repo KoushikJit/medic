@@ -5,17 +5,16 @@ import { modelname, namespace, topK } from "./app/config";
 export async function queryPineconeVectorStore(
   client: Pinecone,
   indexName: string,
-  question: string
+  query: string
 ): Promise<string> {
   const extractor = await pipeline("feature-extraction", modelname, {
     quantized: false,
   });
 
-  const output = await extractor(question, {
+  const output = await extractor(query, {
     pooling: "cls",
   });
   const queryEmbedding = Array.from(output.data);
-  console.log(queryEmbedding);
   console.log("Querying database vector store...");
   const index = client.Index(indexName);
   let queryResponse = await index.namespace(namespace).query({

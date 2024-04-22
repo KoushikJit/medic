@@ -10,14 +10,24 @@ export async function POST(req: Request, res: Response) {
   const reportData: string = reqBody.data.reportData;
   const messages: Message[] = reqBody.messages;
 
-  const prompt1 = `Medical Report: ${reportData} \n\nQuestion: ${messages[messages.length-1].content}`
+  const question = `${messages[messages.length-1].content}`
+  const query = `Represent this for searching relevant passages: patient medical report says: \n${reportData}. \n\nAre these within normal ranges? \n\n${question}`
   
   const pinecone = new Pinecone({
     apiKey: process.env.PINECONE_API_KEY ?? "",
   });
-  const retrievals = await queryPineconeVectorStore(pinecone, indexName, prompt1)
-  console.log(retrievals)
-  const finalPrompt = `Use the following pieces of context to provide suggestive answers about the medical report. Some context might be irrelevant.\n\nContext: ${retrievals} \n\n${prompt1} \n\nAnswer:`;
+  const retrievals = await queryPineconeVectorStore(pinecone, indexName, query)
+  const finalPrompt = 
+  `Use the following pieces of context to identify biomarkers in the medical report which are not within corresponding reference ranges. 
+  The reference ranges are often defined like [low-high]. Next, provide answers about the medical report. Think step by step.
+  The contextual information is presented in order with the most relevant context given first. It may so happen that some or all of the context are irrelevant for the case. 
+  \n\n## Patient report: \n${reportData}. 
+  \n**end of patient report** 
+  \n\n## Contexts: 
+  \n\n${retrievals}. 
+  \n\n**end of contexts** 
+  \n\n## Question: ${question}? 
+  \n\n## Answer:`;
   console.log(finalPrompt);
 
   const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY!);

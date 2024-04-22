@@ -2,7 +2,18 @@
 
 import { Button } from "@/components/ui/button";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
-import { Bot, DoorClosedIcon, Settings } from "lucide-react";
+import { toast } from "sonner";
+import {
+  Bot,
+  CircleAlert,
+  CircleAlertIcon,
+  DoorClosedIcon,
+  FileCheck2,
+  LucideCircleAlert,
+  OctagonAlert,
+  Settings,
+  TriangleAlert,
+} from "lucide-react";
 import SideComponent from "@/components/sidecomponent";
 import { ModeToggle } from "@/components/modetoggle";
 import ChatComponent from "@/components/chatcomponent";
@@ -13,25 +24,19 @@ const Home = () => {
   const [reportData, setreportData] = useState("");
   function onReportConfirmation(data: string): void {
     setreportData(data);
+    toast('Updated!');
   }
 
   return (
-    <div className="grid h-screen w-full pl-[56px]">
-      <aside className="inset-y fixed left-0 z-20 flex h-full flex-col border-r">
-        <div className="border-b p-2">
-          <Button variant="outline" size="icon" aria-label="Home">
-            <Bot className="size-5 fill-slate-300" />
-          </Button>
-        </div>
-        <nav className="grid gap-1 p-2">
-          <ModeToggle></ModeToggle>
-        </nav>
-      </aside>
+    <div className="grid h-screen w-full">
       <div className="flex flex-col">
         <header className="sticky top-0 z-10 flex h-[57px] items-center gap-1 border-b bg-background px-4">
           <h1 className="text-xl font-semibold text-destructive dark:text-destructive-foreground">
             Medic
           </h1>
+          <div className="relative w-full flex flex-row justify-end">
+            <ModeToggle />
+          </div>
           <Drawer>
             <DrawerTrigger asChild>
               <Button variant="ghost" size="icon" className="md:hidden">
@@ -53,6 +58,6 @@ const Home = () => {
       </div>
     </div>
   );
-}
+};
 
 export default Home;

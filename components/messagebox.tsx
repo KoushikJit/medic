@@ -24,6 +24,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Separator } from "@/components/ui/separator";
+import Markdown from "./markdown";
 
 type Props = {
   role?: string;
@@ -33,12 +34,12 @@ const MessageBox = ({ role, content }: Props) => {
   return (
     <Card className="overflow-hidden">
       <CardContent className="p-6 text-sm">
-        <div className="text-muted-foreground">{content}</div>
+        <Markdown text={content as string} />
       </CardContent>
       {role !== "user" && (
         <CardFooter className="flex flex-row items-center border-t bg-muted/50 px-6 py-3">
           <div className="text-xs text-muted-foreground">
-            Disclaimer: The medical advice and recommendations provided by this
+            <span>Disclaimer:</span> The medical advice and recommendations provided by this
             application are for informational purposes only and should not
             replace professional medical diagnosis, treatment, or advice.
           </div>
