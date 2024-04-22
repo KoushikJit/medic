@@ -1,7 +1,7 @@
 import React, { ChangeEvent, FormEvent } from "react";
 import { Textarea } from "./ui/textarea";
 import { Button } from "./ui/button";
-import { CornerDownLeft } from "lucide-react";
+import { CornerDownLeft, Loader2 } from "lucide-react";
 import { Badge } from "./ui/badge";
 import { useChat } from "ai/react";
 import { ChatRequestOptions } from "ai";
@@ -44,9 +44,9 @@ const ChatComponent = ({ reportData }: Props) => {
           className="min-h-12 resize-none border-0 p-3 shadow-none focus-visible:ring-0"
         />
         <div className="flex items-center p-3 pt-0">
-          <Button type="submit" size="sm" className="ml-auto gap-1.5">
+          <Button disabled={isLoading} type="submit" size="sm" className="ml-auto gap-1.5">
             3. Ask
-            <CornerDownLeft className="size-3.5" />
+            {isLoading ? <Loader2 className="size-3.5 animate-spin"/> : <CornerDownLeft className="size-3.5" />}
           </Button>
         </div>
       </form>

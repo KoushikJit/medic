@@ -32,7 +32,9 @@ const SideComponent = ({ onReportConfirmation }: Props) => {
     const response = await axios.post("api/report", {
       base64: imageBase64,
     });
-    setreportData(response.data);
+    if(response.statusText = "OK"){
+      setreportData(response.data.choices[0].message.content);
+    }
     setIsLoading(false);
   }
 
