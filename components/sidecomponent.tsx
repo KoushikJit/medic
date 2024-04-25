@@ -32,8 +32,11 @@ const SideComponent = ({ onReportConfirmation }: Props) => {
     const response = await axios.post("api/report", {
       base64: imageBase64,
     });
-    if(response.statusText = "OK"){
+    if ((response.statusText = "OK")) {
       setreportData(response.data.choices[0].message.content);
+      // console.log(response.data)
+      // const json = JSON.parse(response.data)
+      // setreportData(json.summary);
     }
     setIsLoading(false);
   }
@@ -57,14 +60,21 @@ const SideComponent = ({ onReportConfirmation }: Props) => {
   return (
     <div className="grid w-full items-start gap-6">
       <fieldset className="relative grid gap-6 rounded-lg border p-4">
-        {isLoading && <div id="loader" className="absolute z-10 h-full w-full rounded-lg bg-white/90 flex flex-row items-center justify-center">extracting...</div>}
+        {isLoading && (
+          <div
+            id="loader"
+            className="absolute z-10 h-full w-full rounded-lg bg-card/90 flex flex-row items-center justify-center"
+          >
+            extracting...
+          </div>
+        )}
         <legend className="-ml-1 px-1 text-sm font-medium">Report</legend>
         <div className="grid gap-3">
           <Input type="file" accept="image/*" onChange={handleImageSelection} />
           <Button onClick={extractDetails}>1. Upload File</Button>
         </div>
         <div className="grid gap-3">
-          <Label>Extracted Details</Label>
+          <Label>Report Summary</Label>
           <div className="relative overflow-hidden rounded-lg border bg-background focus-within:ring-1 focus-within:ring-ring">
             <Textarea
               value={reportData}
@@ -77,6 +87,7 @@ const SideComponent = ({ onReportConfirmation }: Props) => {
           </div>
           <Button
             variant={"destructive"}
+            className="bg-[#D90013]"
             onClick={() => {
               onReportConfirmation(reportData);
             }}

@@ -9,7 +9,9 @@ export async function POST(req: Request, res: Response) {
   console.log("report");
   const { base64 } = await req.json();
   const imageParts = filesArrayToGenerativeParts([base64]);
-  const prompt = `Utilize the provided image of a medical report, which contains labeled values representing biomarkers or clinical markers identified in diagnostic tests. Extract these values along with their corresponding biomarker labels and reference ranges if present. Also extract other details like report name, patient name, date etc. If the report contains any other text, then extract that too.`;
+  const prompt = `Attached is an image of a clinical report. 
+  Go over the the clinical report and identify biomarkers that show slight or large abnormalities. Then summarize in 100 words. Do not output patient name, date etc. Output only the summary text.
+  ## Summary: `;
   const promptWithParts = [prompt, ...imageParts];
 
   // //gen ai

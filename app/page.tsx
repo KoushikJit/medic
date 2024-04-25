@@ -11,6 +11,7 @@ import {
   FileCheck2,
   LucideCircleAlert,
   OctagonAlert,
+  Plus,
   Settings,
   TriangleAlert,
 } from "lucide-react";
@@ -24,15 +25,15 @@ const Home = () => {
   const [reportData, setreportData] = useState("");
   function onReportConfirmation(data: string): void {
     setreportData(data);
-    toast('Updated!');
+    toast("Updated!");
   }
 
   return (
     <div className="grid h-screen w-full">
       <div className="flex flex-col">
         <header className="sticky top-0 z-10 flex h-[57px] items-center gap-1 border-b bg-background px-4">
-          <h1 className="text-xl font-semibold text-destructive dark:text-destructive-foreground">
-            Medic
+          <h1 className="text-xl font-semibold text-[#D90013]">
+            <span className="flex flex-row">MediScanPro <Plus /></span>
           </h1>
           <div className="relative w-full flex flex-row justify-end">
             <ModeToggle />
